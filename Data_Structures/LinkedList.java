@@ -55,6 +55,10 @@ public class LinkedList {
 	
 	
 	public static int pop_front(LinkedList list){
+		
+		if(list.head == null) {
+			return -1;
+		}
 		int val = list.head.val;
 		list.head = list.head.next;
 		return val;
@@ -80,13 +84,24 @@ public class LinkedList {
 	}
 	
 	public static int pop_back(LinkedList list){
+		int val;
+		
+		if(list.head == null) {
+			return -1;
+		}
+		else if(list.head.next == null) {
+			val = list.head.val;
+			list.head = null;
+			return val;
+		}
+		
 		Node curr = list.head;
 		Node prev = curr;
 		while(curr.next != null){
 			prev = curr;
 			curr = curr.next;
 		}
-		int val = curr.val;
+		val = curr.val;
 		prev.next = null;
 		return val;
 	}

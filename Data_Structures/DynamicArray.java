@@ -108,22 +108,17 @@ public class DynamicArray {
 	
 	
 	public void insert(int index, int val){
-		if(isIndexValid(index) == false){
-			throw new ArrayIndexOutOfBoundsException();
+
+		if(this.size == this.capacity){
+			expandArray();
+		}
+		for(int i = this.size-1; i >= index; i--){
+			this.array[i+1] = this.array[i];
 		}
 		
-		else{
-			if(this.size == this.capacity){
-				expandArray();
-			}
-			for(int i = this.size-1; i >= index; i--){
-				this.array[i+1] = this.array[i];
-			}
-			
-			this.array[index] = val;
-			this.size++;
-			
-		}
+		this.array[index] = val;
+		this.size++;
+		
 			
 	}
 	
@@ -135,13 +130,14 @@ public class DynamicArray {
 		if(size == 0){
 			throw new ArrayIndexOutOfBoundsException();
 		}
-		int poped = this.array[this.size-1];
-		this.array[this.size-1] = 0; //optional
-		this.size--;
-		printCap();
-		shrinkArray();
-		printCap();
-		return poped;
+		else {
+			int poped = this.array[this.size-1];
+			this.array[this.size-1] = 0; //optional
+			this.size--;
+			shrinkArray();
+			return poped;
+		}
+
 	}
 	
 	public void delete(int index){
