@@ -1,3 +1,4 @@
+package study;
 
 public class Queue {
 	private LinkedList q;

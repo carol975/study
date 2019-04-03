@@ -1,3 +1,4 @@
+package study;
 
 public class QueueArray {
 	private DynamicArray q;
