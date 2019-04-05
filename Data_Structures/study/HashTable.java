@@ -5,10 +5,10 @@ import java.util.List;
 
 public class HashTable {
 	private class HashNode {
-		String key;
+		int key;
 		String val;
 		
-		public HashNode(String key, String val) {
+		public HashNode(int key, String val) {
 			this.key = key;
 			this.val = val;
 
@@ -17,32 +17,31 @@ public class HashTable {
 	
 	private int size;
 	
-	private ArrayList<ArrayList<HashNode>> hTable;
+	private List<List<HashNode>> hTable;
 	public HashTable(int size) {
 		this.size = size;
-		this.hTable = new ArrayList<ArrayList<HashNode>>(size);
+		this.hTable = new ArrayList<List<HashNode>>(size);
+		for(int i = 0; i < size; i++){
+			hTable.add(new ArrayList<HashNode>());
+		}
+			 
+		
 	}
 	
-	private int hash(String key) {
-		return key.hashCode() % this.size;
+	private int hash(int key) {
+		return key % this.size;
 		 
 	}
 	
-	public void add(String key, String val) {
+	public void add(int key, String val) {
 		int index = hash(key);
-		System.out.println(index);
 		List<HashNode> chain = hTable.get(index);
-		if(chain != null) {
-			chain.add(new HashNode(key,val));
-		}
-		else {
-			chain = new ArrayList<HashNode>();
-			chain.add(new HashNode(key,val));
-			hTable.add(index,(ArrayList<HashNode>) chain);
-		}
+		chain.add(new HashNode(key,val));
+		
+		
 	}
 	
-	public boolean exists(String key) {
+	public boolean exists(int key) {
 		int index = hash(key);
 		List<HashNode> chain = hTable.get(index);
 		if(chain.isEmpty() == true ) {
@@ -59,7 +58,7 @@ public class HashTable {
 		}
 	} 
 	
-	public String get(String key) {
+	public String get(int key) {
 		int index = hash(key);
 		List<HashNode> chain =  hTable.get(index);
 		for(HashNode node : chain) {
@@ -71,7 +70,7 @@ public class HashTable {
 		return null;
 	}
 	
-	public String remove(String key) {
+	public String remove(int key) {
 		int index = hash(key);
 		
 		if(exists(key) == false) {
@@ -93,6 +92,7 @@ public class HashTable {
 			for(HashNode node : chain) {
 				System.out.print(node.key + "," + node.val + " ");
 			}
+			System.out.println("");
 		}
 	}
 }
