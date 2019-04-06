@@ -1,4 +1,4 @@
-package study;
+package more_knowledge;
 
 public class BinarySearch {
 	

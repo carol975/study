@@ -1,4 +1,4 @@
-package study;
+package data_structures;
 
 public class main {
 	public static void main(String[] args) {
@@ -9,5 +9,8 @@ public class main {
 		ht.add(2,new String("b"));
 		ht.add(0,new String("b"));
 		ht.print();
+		ht.remove(1);
+		ht.print();
+		System.out.println(ht.exists(1));
 	}
 }

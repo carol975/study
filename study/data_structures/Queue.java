@@ -1,4 +1,4 @@
-package study;
+package data_structures;
 
 public class Queue {
 	private LinkedList q;

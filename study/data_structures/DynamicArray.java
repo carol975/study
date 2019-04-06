@@ -1,4 +1,4 @@
-package study;
+package data_structures;
 import java.lang.ArrayIndexOutOfBoundsException;
 public class DynamicArray {
 	private int[] array;
