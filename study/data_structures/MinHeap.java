@@ -1,7 +1,5 @@
-package daily_coding_problem;
+package data_structures;
 import java.util.Arrays;
-
-import data_structures.BinaryHeap;
 
 public class MinHeap implements BinaryHeap{
 
@@ -13,11 +11,11 @@ public class MinHeap implements BinaryHeap{
 	 */
 	public void insert(int val) {
 		 if (size < heap.length){
+			
+			heap[size] = val;
+			int siftNodeIndex = size;
 			size++;
-			heap[size-1] = val;
-			int siftNodeIndex = size-1;
-			while(heap[siftNodeIndex] < heap[get_parent_index(siftNodeIndex)] ){
-				System.out.println(siftNodeIndex);
+			while(val < heap[get_parent_index(siftNodeIndex)] ){
 				siftNodeIndex = sift_up(siftNodeIndex);
 			}
 			
@@ -34,7 +32,6 @@ public class MinHeap implements BinaryHeap{
 		//System.out.println(siftNodeIndex);
 		//System.out.println(get_left_child_index(siftNodeIndex));
 		while(siftNodeIndex != size-1 && (heap[siftNodeIndex] > heap[get_left_child_index(siftNodeIndex)] || heap[siftNodeIndex] > heap[get_right_child_index(siftNodeIndex)])){
-			System.out.println(siftNodeIndex);
 			siftNodeIndex = sift_down(siftNodeIndex);
 		}
 		
@@ -52,7 +49,7 @@ public class MinHeap implements BinaryHeap{
 	}
 	
 	public int get_parent_index(int childIndex){
-		return childIndex/2;
+		return (childIndex-1 )/2;
 	}
 	
 	public int get_left_child_index(int parentIndex){
@@ -60,7 +57,7 @@ public class MinHeap implements BinaryHeap{
 	}
 	
 	public int get_right_child_index(int parentIndex){
-		return parentIndex*2;
+		return parentIndex*2+2;
 	}
 	
 	public boolean isEmpty(){
@@ -78,9 +75,7 @@ public class MinHeap implements BinaryHeap{
 	
 	public int sift_up(int siftNodeIndex){
 		int parentIndex = get_parent_index(siftNodeIndex);
-		int parentVal = heap[parentIndex];
-		heap[parentIndex] = heap[siftNodeIndex];
-		heap[siftNodeIndex] = parentVal;
+		swap(parentIndex, siftNodeIndex);
 		return parentIndex;
 		
 	}
@@ -93,6 +88,7 @@ public class MinHeap implements BinaryHeap{
 	public int sift_down(int siftNodeIndex){
 		int leftChildIndex = get_left_child_index(siftNodeIndex);
 		int rightChildIndex = get_right_child_index(siftNodeIndex);
+		
 		
 		if(heap[siftNodeIndex] > heap[leftChildIndex] && heap[siftNodeIndex] > heap[rightChildIndex]){
 			if(heap[leftChildIndex] >= heap[rightChildIndex]){
@@ -124,20 +120,28 @@ public class MinHeap implements BinaryHeap{
 	}
 
 	public void print(){
+		for(int i = 0; i < size; i++){
+			System.out.print(heap[i] + " ");
+		}
 		System.out.println(Arrays.toString(heap));
 	}
 	
 	public static void main(String[] args){
-		MinHeap h = new MinHeap(6);
+		MinHeap h = new MinHeap(7);
 		h.print();
-		h.insert(5);
-		h.insert(10);
-		h.insert(15);
-		h.insert(30);
+		h.insert(1);
+		h.insert(50);
+		h.insert(23);
+		h.insert(88);
+		h.insert(90);
+		h.insert(32);
+		h.insert(74);
 		h.print();
-		int min = h.extract();
-		System.out.println(min);
+		//int min = h.extract();
+		//System.out.println(min);
+		h.extract();
 		h.print();
+		
 	}
 }
 
