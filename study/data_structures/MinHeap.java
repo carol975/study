@@ -6,35 +6,25 @@ public class MinHeap implements BinaryHeap{
 	private int[] heap;
 	int size = 0;
 	@Override
-	/***
-	 * return boolean whether the insert is successful or not
-	 */
 	public void insert(int val) {
 		 if (size < heap.length){
 			
 			heap[size] = val;
 			int siftNodeIndex = size;
 			size++;
-			while(val < heap[get_parent_index(siftNodeIndex)] ){
-				siftNodeIndex = sift_up(siftNodeIndex);
-			}
-			
+	        sift_up(siftNodeIndex);
 		}
 		
 	}
 
 	@Override
 	public int extract() {
+		
 		int extractedVal = heap[0];
 		heap[0] = heap[size-1];
 		size--;
 		int siftNodeIndex = 0;
-		//System.out.println(siftNodeIndex);
-		//System.out.println(get_left_child_index(siftNodeIndex));
-		while(siftNodeIndex != size-1 && (heap[siftNodeIndex] > heap[get_left_child_index(siftNodeIndex)] || heap[siftNodeIndex] > heap[get_right_child_index(siftNodeIndex)])){
-			siftNodeIndex = sift_down(siftNodeIndex);
-		}
-		
+		sift_down(siftNodeIndex);
 		return extractedVal;
 		
 	}
@@ -73,43 +63,39 @@ public class MinHeap implements BinaryHeap{
 		}
 	}
 	
-	public int sift_up(int siftNodeIndex){
-		int parentIndex = get_parent_index(siftNodeIndex);
-		swap(parentIndex, siftNodeIndex);
-		return parentIndex;
+	public void sift_up(int siftNodeIndex){
+		
+		if(siftNodeIndex !=0 &&  heap[siftNodeIndex] < heap[get_parent_index(siftNodeIndex)] ){
+			int parentIndex = get_parent_index(siftNodeIndex);
+			swap(parentIndex, siftNodeIndex);
+			sift_up(parentIndex);
+		}
+		
+		
 		
 	}
 	
-	/***
-	 * 
-	 * @param siftNodeIndex
-	 * @return new siftNodeIndex after sift
-	 */
-	public int sift_down(int siftNodeIndex){
-		int leftChildIndex = get_left_child_index(siftNodeIndex);
-		int rightChildIndex = get_right_child_index(siftNodeIndex);
+	public void sift_down(int siftNodeIndex){
 		
-		
-		if(heap[siftNodeIndex] > heap[leftChildIndex] && heap[siftNodeIndex] > heap[rightChildIndex]){
-			if(heap[leftChildIndex] >= heap[rightChildIndex]){
-				swap(rightChildIndex, siftNodeIndex);
-				return rightChildIndex;
-			}
-			else{
-				swap(leftChildIndex,siftNodeIndex);
-				return leftChildIndex;
+		if(siftNodeIndex < size/2){ //check if not leaf node
+			int leftChildIndex = get_left_child_index(siftNodeIndex);
+			int rightChildIndex = get_right_child_index(siftNodeIndex);
+			
+			
+			if(heap[siftNodeIndex] > heap[leftChildIndex] || heap[siftNodeIndex] > heap[rightChildIndex]){
+				if(heap[leftChildIndex] >= heap[rightChildIndex]){
+					swap(rightChildIndex, siftNodeIndex);
+					sift_down(rightChildIndex);
+				}
+				else{
+					swap(leftChildIndex,siftNodeIndex);
+					sift_down(leftChildIndex);
+				}
 			}
 		}
-		else if(heap[siftNodeIndex] > heap[rightChildIndex]){
-			swap(rightChildIndex, siftNodeIndex);
-			return rightChildIndex;
-		}
-		else if(heap[siftNodeIndex] > heap[leftChildIndex]){
-			swap(leftChildIndex,siftNodeIndex);
-			return leftChildIndex;
-		}
+
 		
-		return siftNodeIndex;
+		
 		
 	}
 	
@@ -126,22 +112,26 @@ public class MinHeap implements BinaryHeap{
 		System.out.println(Arrays.toString(heap));
 	}
 	
+	public static MinHeap heapify(int[] arr){
+		MinHeap h = new MinHeap(arr.length);
+		for(int i = 0; i < arr.length;i++){
+			h.insert(arr[i]);
+		}
+		return h;
+	}
+	
 	public static void main(String[] args){
-		MinHeap h = new MinHeap(7);
+		int[] arr = {-1,50,23,89,90,70,8000,9000};
+		MinHeap h = MinHeap.heapify(arr);
 		h.print();
-		h.insert(1);
-		h.insert(50);
-		h.insert(23);
-		h.insert(88);
-		h.insert(90);
-		h.insert(32);
-		h.insert(74);
-		h.print();
-		//int min = h.extract();
-		//System.out.println(min);
 		h.extract();
 		h.print();
-		
+		//h.extract();
+		//h.print();
+		//h.insert(9090);
+		//h.print();
+		//h.insert(-100);
+		//h.print();
 	}
 }
 
