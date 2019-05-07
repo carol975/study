@@ -35,14 +35,14 @@ public class IntegerToRoman {
         	place_value ++;
             int val = (num % 10) * (int)Math.pow(10,place_value);            
             num /= 10;
-            System.out.println(total);
+            //System.out.println(total);
             if(itor.get(val)!= null){
                 total = itor.get(val) + total;
-                System.out.println("41" + total);
+                //System.out.println("41" + total);
             }
             else if(subtractitor.get(val)!= null){
                 total = subtractitor.get(val) + total;
-                System.out.println("45"+total);
+                //System.out.println("45"+total);
             }
             else{
                  if(val < 4){
@@ -53,7 +53,7 @@ public class IntegerToRoman {
                 else{
                     ArrayList<Integer> keyList = new ArrayList<Integer>(itor.keySet());
                     Collections.sort(keyList);
-                    System.out.println(keyList);
+                    //System.out.println(keyList);
                     for(int i = keyList.size()-1; i > 1; i--){
                      if(val > keyList.get(i)){
                     	 if(val % keyList.get(i) == 0){
