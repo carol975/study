@@ -1,4 +1,4 @@
-package data_structures;
+package Trees;
 
 public interface BinaryHeap {
 	public void insert(int val);

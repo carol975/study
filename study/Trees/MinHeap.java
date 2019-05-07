@@ -1,9 +1,9 @@
-package data_structures;
+package Trees;
 import java.util.Arrays;
 
 public class MinHeap implements BinaryHeap{
 
-	private int[] heap;
+	public int[] heap;
 	int size = 0;
 	@Override
 	public void insert(int val) {
