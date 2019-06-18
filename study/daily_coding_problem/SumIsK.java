@@ -33,6 +33,7 @@ public class SumIsK {
 	}
 	
 	public static void main(String[] args){
+		/*
 		Integer[] arr = new Integer[]{0,1,4,7,8,10};
 		int k = 8;
 		System.out.println(sumIsK(arr,k));
@@ -40,5 +41,7 @@ public class SumIsK {
 		System.out.println(sumIsK(arr,k));
 		k = 9;
 		System.out.println(sumIsK(arr,k));
+		*/
+		
 	}
 }
