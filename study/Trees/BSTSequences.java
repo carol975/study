@@ -1,8 +1,7 @@
-package daily_coding_problem;
+package Trees;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import Trees.Node;
 
 public class BSTSequences {
 	public ArrayList<ArrayList<Integer>> getAllSequences(Node root){

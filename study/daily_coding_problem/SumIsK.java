@@ -32,16 +32,31 @@ public class SumIsK {
 		
 	}
 	
+	public static boolean sumIsK2(Integer[] arr, int k){
+		HashSet<Integer> bag = new HashSet<Integer>();
+		for(int i = 0; i < arr.length; i++){
+			if(arr[i]==k){
+				return true;
+			}
+			else if(bag.contains(k-arr[i])){
+				return true;
+			}
+			else{
+				bag.add(arr[i]);
+			}
+		}
+		return false;
+	}
 	public static void main(String[] args){
-		/*
-		Integer[] arr = new Integer[]{0,1,4,7,8,10};
+		
+		Integer[] arr = new Integer[]{0,4,4,7,10};
 		int k = 8;
 		System.out.println(sumIsK(arr,k));
-		k = 20;
-		System.out.println(sumIsK(arr,k));
-		k = 9;
-		System.out.println(sumIsK(arr,k));
-		*/
+		
+		System.out.println(sumIsK2(arr,k));
+		//k = 9;
+		//System.out.println(sumIsK2(arr,k));
+		
 		
 	}
 }

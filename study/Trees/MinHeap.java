@@ -1,8 +1,8 @@
 package Trees;
 import java.util.Arrays;
 
-public class MinHeap implements BinaryHeap{
-
+public class MinHeap{
+	/*
 	public int[] heap;
 	int size = 0;
 	@Override
@@ -104,7 +104,7 @@ public class MinHeap implements BinaryHeap{
 		heap[index1] = heap[index2];
 		heap[index2] = index1Val;
 	}
-
+	*/
 	public void print(){
 		for(int i = 0; i < size; i++){
 			System.out.print(heap[i] + " ");
@@ -112,26 +112,162 @@ public class MinHeap implements BinaryHeap{
 		System.out.println(Arrays.toString(heap));
 	}
 	
-	public static MinHeap heapify(int[] arr){
-		MinHeap h = new MinHeap(arr.length);
-		for(int i = 0; i < arr.length;i++){
-			h.insert(arr[i]);
-		}
-		return h;
+	int[] heap;
+	int size = 0;
+	public MinHeap(int[] arr){
+		heap = arr;
+		Arrays.sort(heap);
+		this.size = heap.length;
 	}
 	
+	public void expandHeap(){
+		int[] newHeap = new int[heap.length *2];
+		for(int i = 0; i < heap.length; i++){
+			newHeap[i] = heap[i];
+		}
+		
+		heap = newHeap;
+	}
+	
+	public void shrinkHeap(){
+		int[] newHeap = new int[heap.length/2];
+		for(int i = 0; i < size; i++){
+			newHeap[i] = heap[i];
+		}
+		
+		heap = newHeap;
+	}
+	public int getParentIndex(int currIndex){
+		if(currIndex <= 0){
+			return -1;
+		}
+		return (currIndex - 1)/2;
+		
+	}
+	
+	public void swap(int index1, int index2){
+		int temp = heap[index1];
+		heap[index1] = heap[index2];
+		heap[index2] = temp;
+	}
+	public void insert(int val){
+		if(this.size == heap.length){
+			expandHeap();
+		}
+		size++;
+		int valIndex = size-1;
+		heap[valIndex] = val;
+		int parentIndex = getParentIndex(valIndex);
+		
+		while(parentIndex != -1 && heap[valIndex] < heap[parentIndex] ){
+			swap(valIndex, parentIndex);
+			valIndex = parentIndex;
+			parentIndex = getParentIndex(valIndex);
+		
+		}
+	}
+	
+	public int getRightChildIndex(int parentIndex){
+		int index = (parentIndex+1)*2;
+		if(index >= size){
+			return -1;
+		}
+		return index;
+	}
+	
+	public int getLeftChildIndex(int parentIndex){
+		int index = (parentIndex+1)*2 - 1;
+		if(index >= size){
+			return -1;
+		}
+		return index;
+	}
+	
+	public int extract(){
+		int min = heap[0];
+		heap[0] = heap[size-1];
+		size--;
+		
+		if(size == heap.length/4){
+			shrinkHeap();
+		}
+		if(size != 0){
+			int valIndex = 0;
+			int lci = 0;
+			int rci = 0;
+			do{
+				lci = getLeftChildIndex(valIndex);
+				rci = getRightChildIndex(valIndex);
+				if(lci != -1 && rci != -1){
+					if(heap[valIndex] <=heap[lci] && heap[valIndex] <= heap[rci]){
+						break;
+					}
+					else if(heap[lci] <= heap[rci]){
+						swap(lci,valIndex);
+						valIndex = lci;
+					}
+					else{
+						swap(rci, valIndex);
+						valIndex = rci;
+					}
+					
+				}
+				else if(lci != -1){
+					if(heap[valIndex] < heap[lci]){
+						swap(lci,valIndex);
+						valIndex = lci;
+					}
+					else{
+						break;
+					}
+				}
+				else if(rci != -1){
+					
+					if(heap[valIndex] < heap[rci]){
+						swap(rci,valIndex);
+						valIndex = rci;
+					}
+					else{
+						break;
+					}
+				}
+				else{
+					break;
+				}
+				
+			}while(valIndex < size);
+		}
+		
+		return min;
+	}
+	
+	
+	
 	public static void main(String[] args){
-		int[] arr = {-1,50,23,89,90,70,8000,9000};
-		MinHeap h = MinHeap.heapify(arr);
+		int[] arr = {-1,50,23,89,90,70};
+		MinHeap h = new MinHeap(arr);
+		h.print();
+		h.insert(-5);
+		h.insert(-6);
 		h.print();
 		h.extract();
 		h.print();
-		//h.extract();
-		//h.print();
-		//h.insert(9090);
-		//h.print();
-		//h.insert(-100);
-		//h.print();
+		h.extract();
+		h.print();
+		h.insert(9090);
+		h.print();
+		h.insert(-100);
+		h.print();
+		h.extract();
+		h.print();
+		h.extract();
+		h.print();
+		h.extract();
+		h.print();
+		h.extract();
+		h.print();
+		h.extract();
+		h.print();
 	}
 }
 
