@@ -1,3 +1,5 @@
+import math
+
 def counting_sort(arr, digit_pos):
     # O(n+k)
     count = [0] * 10
@@ -31,8 +33,44 @@ def radix_sort(arr):
         # O(d(n+k)), d = total digit_pos change 
         counting_sort(arr, digit_pos)
         digit_pos *= 10
+
+def selection_sort(arr): 
+    # best O(n), worst O(n^2)
+    for j in range(1, len(arr)):
+        i = j - 1
+        while arr[i] > arr[j] and i >= 0:
+            i-=1
+        i += 1
+        arr[j], arr[i] = arr[i], arr[j]
+
+def bucket_sort(arr, k):
+    # avg O(n), worst: O(n^2)
+    m = max(arr)
+    buckets = []
+    for _ in range(k):
+        buckets.append([])
     
+    for num in arr:
+        index = math.floor(num / m * k)
+        if index == k:
+            index -= 1
+        buckets[index].append(num)
+    
+    for b in buckets:
+        selection_sort(b)
+    
+    result = []
+    for b in buckets:
+        result.extend(b)
+    
+    return result
+
 # arr = [62,26,63,27,20,21,80]
-arr = [0, 0, 2, 2, 62, 6, 7]
-radix_sort(arr)
-print(arr)
+# arr = [0, 0, 2, 2, 62, 6, 7]
+# radix_sort(arr)
+# print(arr)
+
+arr = [0.62,0.26,0.63,0.27,0.20,0.21,0.80]
+
+sorted_arr = bucket_sort(arr, len(arr))
+print(sorted_arr)
