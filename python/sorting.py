@@ -1,5 +1,5 @@
 import math
-
+from random import randint
 def counting_sort(arr, digit_pos):
     # O(n+k)
     count = [0] * 10
@@ -65,12 +65,34 @@ def bucket_sort(arr, k):
     
     return result
 
+def rand_quick_sort(arr, p, r):
+    # best O(nlgn), worst O(n^2)
+    # depends on the partition point i
+    if p < r:
+        rand_ind = randint(p, r)
+        arr[rand_ind], arr[r] = arr[r], arr[rand_ind]
+        i = p-1
+        j = p
+        while j < r:
+            if arr[j] <= arr[r]:
+                i+=1 
+                arr[i], arr[j] = arr[j], arr[i]
+            j+=1
+
+        i+=1
+        arr[i], arr[r] = arr[r], arr[i]
+
+        rand_quick_sort(arr, p, i-1)
+        rand_quick_sort(arr, i+1, r)
+            
+
 # arr = [62,26,63,27,20,21,80]
 # arr = [0, 0, 2, 2, 62, 6, 7]
 # radix_sort(arr)
 # print(arr)
 
-arr = [0.62,0.26,0.63,0.27,0.20,0.21,0.80]
+arr = [0.62,0.26,0.63,0.27,0.20,0.21,-0.80]
 
-sorted_arr = bucket_sort(arr, len(arr))
-print(sorted_arr)
+# sorted_arr = bucket_sort(arr, len(arr))
+rand_quick_sort(arr, 0, len(arr)-1)
+print(arr)
