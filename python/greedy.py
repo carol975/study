@@ -44,17 +44,39 @@ def create_encoding_table(string):
         traverse_encoding_tree("", tree, encoding_table)
     return encoding_table
 
+def create_decoding_table(encoding_table):
+    decoding_table = {}
+    for k in encoding_table:
+        v = encoding_table[k]
+        decoding_table[v] = k
+    return decoding_table
 
-
-def huffman_encode(string):
-    encoding_table = create_encoding_table(string)
+def huffman_encode(string, encoding_table):
     encoded_str = ""
     for c in string:
         encoded_str += encoding_table.get(c,"*")
     
     return encoded_str
 
-string = "BCCABBDDAECCBBAEDDCC"
+def huffman_decode(string, decoding_table):
+    i = 0
+    j = 0
+    decoded_str = ""
+    while j < len(string):
+        if string[i:j+1] in decoding_table:
+            decoded_str += decoding_table[string[i:j+1]]
+            i = j+1
+        j+=1
+    return decoded_str
 
-e = huffman_encode(string)
-print(e)
+if __name__ == "__main__":
+    # huffman encode test
+    string = "BCCABBDDAECCBBAEDDCC"
+    hfm_encoding_table = create_encoding_table(string)
+    e = huffman_encode(string, hfm_encoding_table)
+    print(e)
+    hfm_decoding_table = create_decoding_table(hfm_encoding_table)
+    d = huffman_decode(e, hfm_decoding_table)
+    print(d)
+
+    assert(string == d)
