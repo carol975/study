@@ -64,25 +64,24 @@ def treenode_predecessor(node):
         y = node.parent
     return y
 
-def tree_insert(tree, root, node):
+def tree_insert(tree, node):
     
     parent = None
     cursor = tree.root
+
     while cursor:
-        parent = cursor.parent        
+        parent = cursor     
         if node.val > cursor.val:
             cursor = cursor.right
         else:
             cursor = cursor.left
-
     node.parent = parent
     if not parent:
-        return node
+        tree.root = node
     elif node.val > parent.val:
         parent.right = node
     else:
         parent.left = node             
-    return cursor
 
 def tree_delete(tree, node):
     if node.left is None:
@@ -109,15 +108,31 @@ def tree_delete(tree, node):
 
 root = TreeNode(12)
 tree = Tree(root)
-root.left = TreeNode(5,None, None,root)
-root.left.left = TreeNode(2,None, None,root.left)
-root.left.right = TreeNode(9,None, None,root.left)
-root.right = TreeNode(18,None, None,root)
-root.right.left = TreeNode(15,None, None,root.right)
-root.right.right = TreeNode(19,None, None,root.right)
-root.right.left.left = TreeNode(13,None, None,root.right.left)
-root.right.left.right = TreeNode(17, None, None, root.right.left)
+n = TreeNode(5)
+tree_insert(tree,n)
+n = TreeNode(2)
+tree_insert(tree,n)
+n = TreeNode(9)
+tree_insert(tree,n)
+n = TreeNode(18)
+tree_insert(tree,n)
+n = TreeNode(15)
+tree_insert(tree,n)
+n = TreeNode(19)
+tree_insert(tree,n)
+n = TreeNode(13)
+tree_insert(tree,n)
+n = TreeNode(17)
+tree_insert(tree,n)
+# root.left = TreeNode(5,None, None,root)
+# root.left.left = TreeNode(2,None, None,root.left)
+# root.left.right = TreeNode(9,None, None,root.left)
+# root.right = TreeNode(18,None, None,root)
+# root.right.left = TreeNode(15,None, None,root.right)
+# root.right.right = TreeNode(19,None, None,root.right)
+# root.right.left.left = TreeNode(13,None, None,root.right.left)
+# root.right.left.right = TreeNode(17, None, None, root.right.left)
 
 print_inorder(tree.root)
-tree_delete(tree, tree.root)
+tree_delete(tree, tree.root.left)
 print_inorder(tree.root)
