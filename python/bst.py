@@ -13,6 +13,25 @@ def print_inorder(root):
         print_inorder(root.right)
 
 
+def print_inorder_itr(root):
+    # RT O(n)
+    # SC O(h) or the longest simple path from root to a leaf node
+    root.visited = False
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node.visited is False:
+            node.visited = True
+            if node.right:
+                node.right.visited = False
+                stack.append(node.right)
+            stack.append(node)
+            if node.left:
+                node.left.visited = False
+                stack.append(node.left)
+        else:
+            print(node.val)
+            
 class Tree:
     def __init__(self, root:TreeNode=None):
         self.root = root
@@ -104,7 +123,8 @@ def tree_delete(tree, node):
         # successor inherits node' left children
         successor.left = node.left
         node.left.parent = successor
-        
+
+ 
 
 root = TreeNode(12)
 tree = Tree(root)
@@ -133,6 +153,6 @@ tree_insert(tree,n)
 # root.right.left.left = TreeNode(13,None, None,root.right.left)
 # root.right.left.right = TreeNode(17, None, None, root.right.left)
 
-print_inorder(tree.root)
+print_inorder_itr(tree.root)
 tree_delete(tree, tree.root.left)
-print_inorder(tree.root)
+print_inorder_itr(tree.root)
